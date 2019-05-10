@@ -5,6 +5,7 @@
 #### 1. Add two number without using "+" method;
 ##### method 1 -- while loop
 ```Java
+//Java
 public static int AddAToB(int a, int b){
   while (b != 0){
     int _a = a ^ b;
@@ -36,6 +37,7 @@ static function to be operated inside.  */
 ##### method 2 -- Recursive
 
 ```JS
+//JS
 let _a, _b
 const addAToB = (a, b) => {
   _a = a ^ b
@@ -58,6 +60,7 @@ const addAToB = (a, b) => {
 - Accumation between recursive methods, which means return the recursive-formula based function. The upper recursive function would not get its return value if lacking that "return"
 #### 2. Reverse the 3 digits integer
 ```JS
+//JS
 let unit, new_num = 0
 //new_num needed to be initialized 
 const Reverser = num => {
