@@ -80,3 +80,34 @@ for(condition), that will cause the range change during this for-cycle;
 What is more, do not forget the initialization of new_num, for it would
 return undefined in this case*/
 ```
+### Deduplicated an Array
+#### Given an array of integers, remove the duplicate numbers in it.
+
+##### You should:
+
+- Do it in place in the array.
+- Move the unique numbers to the front of the array.
+- Return the total number of the unique numbers.
+
+```Java
+public int deduplication(int[] nums) {
+    // write your code here
+    if(nums.length == 0){
+        return 0;
+    }
+    Arrays.sort(nums);
+    int n = 0;
+    for(int i = 0; i < nums.length; i++){
+        if(nums[n]!=nums[i]){
+            nums[++n]=nums[i];
+        }
+    }
+
+    // System.out.println(Arrays.toString(nums));
+    return n + 1;
+}  
+```
+##### The whole method is doing this thing:
+###### - First, sorting the array to make all the members in the ascenting sequence, in that way the same members would be placed adjacent;
+###### - Second, change the next different member into the place after the pervious renewed member. The arr[0] place would not be replace if this array is not empty, for is always should be shown in the renewed array.
+###### - After all the replacement, the n is the record of how many exchange you have reached. But remember the arr[0] have not been changed, while this member should be calculated.
