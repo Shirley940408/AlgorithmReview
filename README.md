@@ -111,3 +111,100 @@ public int deduplication(int[] nums) {
 ###### - First, sorting the array to make all the members in the ascenting sequence, in that way the same members would be placed adjacent;
 ###### - Second, change the next different member into the place after the pervious renewed member. The arr[0] place would not be replace if this array is not empty, for is always should be shown in the renewed array.
 ###### - After all the replacement, the n is the record of how many exchange you have reached. But remember the arr[0] have not been changed, while this member should be calculated.
+
+## String
+### get the length of a String
+
+```java
+String str = "a string";
+System.out.println(str.length());
+//length vs. length()
+//.length is used in an Array, and length() is used in a String
+```
+### The traverse of String
+```Java
+String str ="a string";
+for(int i = 0; i < str.length(); i++){
+char ch =str.charAt(i);
+//...
+}
+
+```
+## Algorithm
+#### 1. Given a string, determine if it is a palindrome
+```Java
+/*
+Description
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+Example 1:
+Input: "A man, a plan, a canal: Panama"
+Output: true
+Explanation: "amanaplanacanalpanama"
+
+Example 2:
+Input: "race a car"
+Output: false
+Explanation: "raceacar"
+*/
+ 
+public static boolean isPalindrome(String str){
+  str= str.toLowerCase();
+  int i = 0;
+  int j = str.length()-1;
+  while(i < j){
+    if(!Character.isLetterOrDigit(str.charAt(i))){
+     i++;
+     continue;
+    }else if(!Character.isLetterOrDigit(str.charAt(j))){
+     j--;
+     continue;
+    }else if(str.charAt(i) != str.charAt(j)){
+        return false;
+    }else{
+        i++;
+        j--;
+    }   
+  }
+    return true;
+}
+```
+#### 2. Given a string, convert it to an integer.
+
+```Java
+/*
+Given a string, convert it to an integer. You may assume the string is a valid integer number that can be presented by a signed 32bit integer (-231 ~ 231-1).
+Example 1:
+	Input:  "123"
+	Output: 123
+	
+	Explanation: 
+	return the Integer.
+
+Example 2:
+	Input:  "2"
+	Output: 2
+	
+	Explanation: 
+	return the Integer.
+*/
+public int stringToInteger(String str) {
+    // write your code here
+    if(str == ""){
+        return 0;
+    }
+    boolean flag = str.charAt(0) == '-';
+    int startBit = flag ? 1 : 0;
+    int digit, sum = 0;
+    for(int i = startBit; i < str.length(); i++){
+        digit = str.charAt(i) -'0';
+        if(startBit == 1){
+        sum = sum * 10 -digit;    
+        }else{
+           sum = sum * 10 + digit; 
+        }
+    }
+    return sum;
+}
+```
+
