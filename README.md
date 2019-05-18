@@ -207,4 +207,45 @@ public int stringToInteger(String str) {
     return sum;
 }
 ```
+#### Review Point
+##### Always remember the "null" situation that needs to be considered.
 
+## What is Object - Oriented ?
+- Object-Oriented is a kind of world view
+- Object-Oriented is a way to design program
+### as an Object, it always has two things:
+- attritube--member parameter
+- behavior -- member function
+## what is class
+- Class is the abstract of Object. Object is an instance of the class.
+- type of class name -- upper camel case
+### constructor function
+- has the same name of class
+- does not have the return type, for it does not have return value
+- cannot be visited from outside
+- constructor function is called automatically when the object being initialized.
+- constructor function has the overload（重载）
+### this
+- to avoid the misleading of parameter brought from outside and the class attributes.
+- let the attributes always point to this object 
+```Java
+public class Example {
+    public static void main(String[] args){
+        Student stu = new Student("Jack", 89);
+        stu.speak();
+
+    }
+}
+
+class Student{
+    public String name;
+    public int score;
+    public Student(String name, int score){
+        this.name = name;
+        score = score;// it would not get the 89 from outside, cause this is missing.
+    }
+     public void speak(){
+        System.out.println(name +" "+ score);
+     }
+}
+```
