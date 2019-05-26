@@ -14,7 +14,7 @@ for it is an unfinished adding method. Thus, we
 need to recalculate the carry unit using variable
 _b.*/
     int _b = (a & b) << 1;
-    /* _b is using for recording which unit is
+    /* _b is using for recquording which unit is
 needed to be recalculated, for it only appears at
 both unit of a and b are '1'. e.g. 00000110 &
 00000100 = 00000100, so it is the third one not
