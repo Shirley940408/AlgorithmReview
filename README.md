@@ -249,3 +249,184 @@ class Student{
      }
 }
 ```
+## Reference, List
+### Algorithm
+#### 1. Reverse Linked List
+```Java
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param head: n
+     * @return: The new head of reversed linked list.
+     */
+    public ListNode reverse(ListNode head) {
+        // write your code here
+        ListNode pre = null;
+        ListNode temp;
+        while(head != null){
+            temp = head.next;
+            head.next = pre;
+            pre = head;
+            head = temp;
+        }
+        return pre;
+    }
+}
+```
+##### Remember to traverse all the LinkedList from head, if your are using a dummy point, then from dummy.next.
+#### 2.Merge Two Sorted Lists
+##### Merge two sorted (ascending) linked lists and return it as a new sorted list. The new sorted list should be made by splicing together the nodes of the two lists and sorted in ascending order.
+```Java
+/*
+Example 1:
+	Input: list1 = null, list2 = 0->3->3->null
+	Output: 0->3->3->null
+
+
+Example 2:
+	Input:  list1 =  1->3->8->11->15->null, list2 = 2->null
+	Output: 1->2->3->8->11->15->null
+*/
+
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param l1: ListNode l1 is the head of the linked list
+     * @param l2: ListNode l2 is the head of the linked list
+     * @return: ListNode head of linked list
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        // write your code here
+        ListNode dummy = new ListNode(-1);
+        ListNode lastNode = dummy;
+        
+        while (l1 != null && l2 != null){
+            if(l1.val < l2.val){
+                lastNode.next = l1;
+                l1 = l1.next;
+            }else{
+                lastNode.next = l2;
+                l2 = l2.next; 
+            }
+            lastNode = lastNode.next;
+        }
+        if(l1 != null){
+            lastNode.next = l1;
+        }else{
+            lastNode.next = l2;
+        }
+        
+    return dummy.next;    
+    }
+}
+```
+#### 3.Remove Linked List Elements
+##### Remove all elements from a linked list of integers that have value val.
+```Java
+/*
+Example 1:
+
+Input: head = 1->2->3->3->4->5->3->null, val = 3
+Output: 1->2->4->5->null
+Example 2:
+
+Input: head = 1->1->null, val = 1
+Output: null
+*/
+
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param head: a ListNode
+     * @param val: An integer
+     * @return: a ListNode
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        // write your code here
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode lastNode = dummy;
+        while(lastNode.next != null){
+            if(lastNode.next.val == val){
+                lastNode.next = lastNode.next.next;
+            }else{
+                lastNode = lastNode.next; 
+            }
+        }
+        return dummy.next;
+    }
+}
+```
+#### 4. Insert Node in Sorted Linked List
+```Java
+/**
+ * Definition for ListNode
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param head: The head of linked list.
+     * @param val: An integer.
+     * @return: The head of new linked list.
+     */
+    public ListNode insertNode(ListNode head, int val) {
+        // write your code here
+        ListNode dummy = new ListNode(-1);
+        ListNode newNode = new ListNode(val);
+        dummy.next = head;
+        ListNode lastNode = dummy;
+        while(lastNode.next != null && lastNode.next.val <= val){
+            lastNode = lastNode.next;
+        }
+        newNode.next = lastNode.next;
+        lastNode.next = newNode;
+        return dummy.next;
+        
+    }
+}
+```
+##### Remember how to insert a node into a linkedList
+1. newNode.next = preNode.next.next;
+// It is not newNode = preNode.next.next -- **wrong way**
+3. preNode.next = newNode;
