@@ -1,4 +1,4 @@
-let _a, _b
+let _a, _b, result;
 const AddAToB = (a, b) =>{
     _a = a ^ b
     // console.log(_a)
@@ -8,10 +8,11 @@ const AddAToB = (a, b) =>{
     //  console.log('a = '+a)
      if(!_b){
        console.log('answer = '+a);
-      return a
+       result = a;
+      return;
     }
      b = _b 
-    return AddAToB(a, b)
+    AddAToB(a, b)
 }
 const answer = AddAToB(10, 7)
-console.log(answer);
+console.log(result);
