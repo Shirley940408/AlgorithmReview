@@ -431,5 +431,77 @@ public class Solution {
 // It is not newNode = preNode.next.next -- **wrong way**
 3. preNode.next = newNode;
 
-## Chapter 5 -- 双指针
- 
+## 双指针算法 -- 不是算法的算法
+### 相向双指针：
+1. ##### 一个典型的相向双指针问题 -- 翻转字符串
+> #### 要把大象装冰箱总共分几步 -- 三步
+- #### `swap(left, right)`
+- #### `left++`
+- #### `right--`
+```js
+const ReverseString = str => {
+  strArray = str.split("");
+  let left = 0 ; let right = strArray.length - 1;
+  while(left < right){
+    let temp = strArray[left];
+    strArray[left] = strArray[right];
+    strArray[right] = temp;
+    left++;
+    right--;
+  }
+  return strArray.join("");
+}
+```
+2. ##### 给一个整数数组，找到两个数使得他们的和等于一个给定的数 target。返回这两个数。
+> #### 使用哈希表来解决 -- JS(ES6) 也有Set和Map, 哈哈哈哈哈
+```js
+const TwoSum = (numArray, target) => {
+  const set = new Set();
+  for(i = 0; i < numArray.length; i++){
+    if(set.has(numArray[i])){
+      return [numArray[i], target - numArray[i]];
+    }
+    set.add(target - numArray[i]);
+  }
+  return null;
+}
+
+```
+> #### 使用双指针算法解决
+```js
+const twoSum = (numArray, target) => {
+  numArray.sort();
+  let left = 0; let right = numArray.length - 1;
+  while(left < right){
+    if(numArray[left] + numArray[right] == target){
+      return [numArray[left], numArray[right]];
+    }
+    else if(numArray[left] + numArray[right] < target){
+      left++;
+    }
+    else{
+      right--;
+    }
+  }
+  return null;
+}
+```
+### 同向双指针
+#### 1. 数组去重
+> #### O(nlogn) time, O(1) extra space 
+```jsx
+const removeDuplicates = function(nums) {
+  // nums.sort();
+  let slowPointer = 0;
+  for(i = 0; i < nums.length; i++){
+      if(nums[i] != nums[slowPointer]){
+          nums[++slowPointer] = nums[i];
+      }
+  }
+  while(nums.length > slowPointer + 1){
+      nums.pop();
+  }
+  // console.log(nums);
+  return nums;
+};
+```
