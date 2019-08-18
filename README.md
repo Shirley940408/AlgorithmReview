@@ -430,3 +430,6 @@ public class Solution {
 1. newNode.next = preNode.next.next;
 // It is not newNode = preNode.next.next -- **wrong way**
 3. preNode.next = newNode;
+
+## Chapter 5 -- 双指针
+ 
