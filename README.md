@@ -505,3 +505,61 @@ const removeDuplicates = function(nums) {
   return nums;
 };
 ```
+## BFS -- 宽度优先搜索
+
+#### Question： 图上的宽度优先搜索与树上的宽度优先搜索的区别？
+#### Answer：图上的点会成环, 所以要记录点是否已经查过
+
+```js
+/**
+ * // Definition for a Node.
+ * function Node(val,neighbors) {
+ *    this.val = val;
+ *    this.neighbors = neighbors;
+ * };
+ */
+/**
+ * @param {Node} node
+ * @return {Node}
+ */
+var cloneGraph = function(node) {
+  const map = new Map();
+  const old = getNode(node);
+  //copy nodes
+  for(let node of old){
+    map.set(node, new Node(node.val, []))
+  }
+  //copy neighbors(edges)
+  for(let node of old){
+    let newNode = map.get(node);
+    for(let neighbor of node.neighbors){
+      newNeighbor = map.get(neighbor)
+      newNode.neighbors.push(newNeighbor)
+      // Why need to push every newNeighbor into newWode.neighbors.push() -- you need to copy values, not copy reference.
+    }
+  }
+  return map.get(node)    
+};
+
+const getNode = node => {
+  const queue = []; // remain all the nodes in the graph for level control
+  const set = new Set(); // record for every node.
+  queue.push(node);
+  set.add(node);
+  while(queue.length){
+    const node = queue.shift();
+    for(let neighbor of node.neighbors){
+      if(!set.has(neighbor)){
+        queue.push(neighbor);
+        set.add(neighbor);
+      }
+    }
+  }
+  return set;
+}
+```
+#### Attention point: 增强for循环js：
+循环key: `for(key in array){...}`
+循环value: `for(value of array){...}`
+
+### BST 图的问题的时间复杂度：O(N+M): N 为点数， M为边数
