@@ -15,18 +15,18 @@ Output: 10
  * @return: then mountain top
 */
 const mountainSequence = function (nums) {
-  if(nums === null || nums.length ===0){
+  if(nums === null || nums.length === 0){
       return null;
   }
   let start = 0;
   let end = nums.length - 1;
   while(start + 1 < end){
-      mid = Math.floor((start + end) / 2);
-      if(nums[mid] < nums [mid + 1]){
-          start = mid;
-      }else{
-          end = mid;
-      }
+    mid = Math.floor((start + end) / 2);
+    if(nums[mid] < nums[mid + 1]){
+      start = mid;
+    }else{
+      end = mid;
+    }
   }
   return Math.max(nums[start], nums[end]);
 }
