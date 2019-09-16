@@ -32,16 +32,14 @@ const findMin = function (nums) {
   let target = nums[end];
   while(start + 1 < end){
       let mid = Math.floor((start + end) / 2);
-      // console.log(mid);
       if(nums[mid] <= target){
           end = mid;
-          // console.log("end = "+ end);
       }
       else{
           start = mid;
-          // console.log("start = "+ start);
       }
   }
   return Math.min(nums[start], nums[end]);
 }
 console.log(findMin([6,1,2,3,4,5]));
+
