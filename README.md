@@ -1098,3 +1098,85 @@ public class Solution {
 ##### Q: 为什么明明可以 start = mid + 1 偏偏要写成 start = mid?
 
 ##### A: 大部分时候，mid 是可以 +1 和 -1 的。在一些特殊情况下，比如寻找目标的最后一次出现的位置时，当 target 与 nums[mid] 相等的时候，是不能够使用 mid + 1 或者 mid - 1 的。因为会导致漏掉解。那么为了节省脑力，统一写成 start = mid / end = mid 并不会造成任何解的丢失，并且也不会损失效率——log(n) 和 log(n+1) 没有区别。
+
+## 二叉树中的分治法与遍历法
+------------
+在这一章节的学习中，我们将要学习一个数据结构——`二叉树`（Binary Tree），和基于二叉树上的搜索算法。
+
+在二叉树的搜索中，我们主要使用了分治法（Divide Conquer）来解决大部分的问题。之所以大部分二叉树的问题可以使用分治法，是因为二叉树这种数据结构，是一个天然就帮你做好了分治法中“分”这个步骤的结构。
+
+本章节的先修内容有：
+
+*   什么是递归（Recursion）—— 请回到第二章节中复习
+*   递归（Recursion）、回溯（Backtracking）和搜索（Search）的联系和区别
+*   分治法（Divide and Conquer）和遍历法（Traverse）的联系和区别
+*   什么是结果类 ResultType，什么时候使用 ResultType
+*   什么是二叉查找树（Binary Search Tree）
+*   什么是平衡二叉树（Balanced Binary Tree）
+
+本章节的补充内容有：
+
+*   Morris 算法：使用 O(1) 的额外空间复杂度对二叉树进行先序遍历（Preorder Traversal）
+*   用非递归的方法实现先序遍历，中序遍历和后序遍历
+*   二叉查找树（Binary Search Tree）的增删查改
+*   Java 自带的平衡排序二叉树 TreeMap / TreeSet 的介绍和面试中的应用
+
+### 定义
+
+遍历（Traversal），顾名思义，就是`通过某种顺序，一个一个访问一个数据结构中的元素`。比如我们如果需要遍历一个数组，无非就是要么从前往后，要么从后往前遍历。但是对于一棵二叉树来说，他就有很多种方式进行遍历：
+
+1.  层序遍历（Level order）
+2.  先序遍历（Pre order）
+3.  中序遍历（In order）
+4.  后序遍历（Post order）
+
+我们在之前的课程中，已经学习过了二叉树的层序遍历，也就是使用 BFS 算法来获得二叉树的分层信息。通过 BFS 获得的顺序我们也可以称之为 BFS Order。而剩下的三种遍历，都需要通过深度优先搜索的方式来获得。而这一小节中，我们将讲一下通过深度优先搜索（DFS）来获得的节点顺序，
+
+### 先序遍历 / 中序遍历 / 后序遍历
+
+#### 先序遍历（又叫先根遍历、前序遍历）
+
+首先访问根结点，然后遍历左子树，最后遍历右子树。**遍历左、右子树时，仍按先序遍历**。若二叉树为空则返回。
+
+该过程可简记为**根左右**，注意该过程是**递归的**。如图先序遍历结果是：**ABDECF**。  
+![img](http://media.jiuzhang.com/markdown/images/3/15/d77b07ce-27f7-11e8-9f14-0242ac110002.jpg)
+```Java
+private void traverse(TreeNode root, ArrayList<Integer> result) {
+    if (root == null) {
+        return;
+    }
+    result.add(root.val);
+    traverse(root.left, result);
+    traverse(root.right, result);
+}
+```
+中序遍历（又叫中根遍历）
+首先遍历左子树，然后访问根结点，最后遍历右子树。遍历左、右子树时，仍按中序遍历。若二叉树为空则返回。简记为左根右。
+上图中序遍历结果是：DBEAFC。
+核心代码：
+
+```Java
+private void traverse(TreeNode root, ArrayList<Integer> result) {
+    if(root == null){
+      return;
+    }
+    traverse(root.left, result);
+    result.add(root.val);
+    traverse(root.right, result);
+}
+```
+后续遍历
+首先遍历左子树，然后遍历右子树，最后访问根结点。遍历左、右子树时，仍按后序遍历。若二叉树为空则返回。简记为左右根。
+上图后序遍历结果是：DEBFCA。
+核心代码：
+
+```java
+private void traverse(TreeNode root, ArrayList<Integer> result){
+    if(root == null){
+      return;
+    }
+    traverse(root.left, result);
+    traverse(root.right, result);
+    result.add(root.val);
+}
+```
