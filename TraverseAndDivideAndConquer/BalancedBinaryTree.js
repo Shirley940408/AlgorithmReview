@@ -22,6 +22,8 @@
 //   }
 //   return Math.max(left, right) + 1;
 // }
+
+//A decent way to write to avoid the misunderstanding about the return result of return height and is Balanced or not.
 const isBalanced = function (root) {
   // write your code here
   this.NotBalanced = - 1;
