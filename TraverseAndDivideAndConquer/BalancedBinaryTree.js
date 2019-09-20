@@ -26,7 +26,6 @@
 //A decent way to write to avoid the misunderstanding about the return result of return height and is Balanced or not.
 const isBalanced = function (root) {
   // write your code here
-  this.NotBalanced = - 1;
   return height(root).balanced == true;
 }
 
@@ -36,7 +35,7 @@ const height = (root) => {
   }
   let left = height(root.left);
   let right = height(root.right);
-  if(left.height == NotBalanced || right.height == NotBalanced){
+  if(left.balanced == false || right.balanced == false){
       return new ResultType(-1, false);
   }
   if(Math.abs(left.height - right.height) > 1){
