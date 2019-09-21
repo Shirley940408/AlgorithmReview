@@ -1180,6 +1180,13 @@ private void traverse(TreeNode root, ArrayList<Integer> result){
     result.add(root.val);
 }
 ```
+遍历法和分治法实战
+---------
+这一小节中，我们通过如下的一些较为简单的练习题，来学习和对比遍历法和分治法：
+*   二叉树最大深度
+*   判断平衡二叉树
+*   判断排序二叉树
+
 ### Maximum Depth of Binary Tree
 ### 遍历
 ```java
