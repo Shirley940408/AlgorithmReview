@@ -1180,3 +1180,173 @@ private void traverse(TreeNode root, ArrayList<Integer> result){
     result.add(root.val);
 }
 ```
+### Maximum Depth of Binary Tree
+### 遍历
+```java
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param root: The root of binary tree.
+     * @return: An integer
+     */
+    private int height;
+    public int maxDepth(TreeNode root) {
+        // write your code here
+        height = 0;
+        helper(root, 1);
+        return height;
+
+    }
+    private void helper(TreeNode root, int depth){
+        if(root == null){
+            return;
+        }
+        height = Math.max(depth, height);
+        helper(root.left, depth + 1);
+        helper(root.right, depth + 1);
+    }
+}
+```
+### 分治
+```js
+const isBalanced = function (root) {
+  // write your code here
+  return height(root).balanced == true;
+}
+
+const height = (root) => {
+  if(root === null){
+      return new ResultType(0, true);
+  }
+  let left = height(root.left);
+  let right = height(root.right);
+  if(left.balanced == false || right.balanced == false){
+      return new ResultType(-1, false);
+  }
+  if(Math.abs(left.height - right.height) > 1){
+      return new ResultType(-1, false);
+  }
+  return new ResultType(Math.max(left.height, right.height) + 1, true);
+}
+
+class ResultType{
+  constructor(height, balanced){
+      this.height = height; // integer
+      this.balanced = balanced; // boolean
+  }
+}
+```
+### Valid Binary Search Tree
+### 遍历
+```js
+/**
+95. Validate Binary Search Tree
+Given a binary tree, determine if it is a valid binary search tree (BST).
+
+Assume a BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+A single node tree is a BST
+Example
+Example 1:
+
+Input:  {-1}
+Output：true
+Explanation：
+For the following binary tree（only one node）:
+	      -1
+This is a binary search tree.
+Example 2:
+
+Input:  {2,1,4,#,#,3,5}
+Output: true
+For the following binary tree:
+	  2
+	 / \
+	1   4
+	   / \
+	  3   5
+This is a binary search tree.
+ * @param root: The root of binary tree.
+ * @return: True if the binary tree is BST, or false
+ */
+const isValidBST = function (root) {
+    // write your code here
+    this.isValid = true;
+    this.lastNode = null;
+    inOrderTraverse(root);
+    return isValid;
+}
+
+const inOrderTraverse = root => {
+    if(root === null){
+        return;
+    }
+    inOrderTraverse(root.left);
+    if(lastNode !== null && lastNode.val >= root.val){
+        isValid = false;
+        return;
+    }
+    lastNode = root;
+    inOrderTraverse(root.right);
+}
+```
+### 分治
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+const isValidBST = function (root) {
+    return DivideAndConquer(root).isBST;
+}
+
+const DivideAndConquer = root => {
+        // write your code here
+    if(root === null){
+        return new ResultType(true);
+    }
+    let left = DivideAndConquer(root.left); //ResultType
+    let right = DivideAndConquer(root.right); //ResultType
+    if(!left.isBST ||!right.isBST){
+        return new ResultType(false);
+    }
+    if(left.maxValue !== null && root.val <= left.maxValue.val){
+        return new ResultType(false);
+    }
+    if(right.minValue !== null && root.val >= right.minValue.val){
+        return new ResultType(false);
+    }
+    let result = new ResultType(true);
+    result.minValue = left.minValue !== null ? left.minValue : root;
+    result.maxValue = right.maxValue !== null ? right.maxValue : root;
+    return result;
+}
+class ResultType{
+    constructor(isBST){
+        this.isBST = isBST// true
+        this.minValue = null;
+        this.maxValue = null;
+    }
+}
+```
