@@ -1368,3 +1368,49 @@ class ResultType{
 
 ### 两种方法的区别
 #### 从程序实现角度分治法的递归函数，通常有一个返回值，遍历法通常没有。
+
+### 递归三要素
+#### 1\. 递归的定义
+
+> 每一个递归函数，都需要有明确的定义，有了正确的定义以后，才能够对递归进行拆解。
+> ```java
+> int maxDepth(TreeNode root)
+> ```
+#### 2\. 递归的拆解
+
+> 一个`大问题`如何拆解为若干个`小问题`去解决。
+> ```java
+> int leftDepth = maxDepth(root.left);
+> int rightDepth = maxDepth(root.right);
+> return Math.max(leftDepth, rightDepth) + 1;
+> ```
+>一棵树的前序遍历可以拆解为3个部分：
+>
+>1.  根节点自己（root）
+>2.  左子树的前序遍历
+>3.  右子树的前序遍历 
+>
+>所以对应的，我们把这个递归问题也拆分为三个部分来解决：
+>
+>1.  先把 root 放到 result 里 --> result.add(root);
+>2.  再把左子树的前序遍历放到 result 里 --> >preorder(root.left, result)。回想一下递归的定义，是不是正是>如此？
+>3.  再把右子树的前序遍历放到 result 里 --> >preorder(root.right, result)。
+
+#### 3\. 递归的出口
+
+> 什么时候可以直接知道答案，不用再拆解，直接 return
+>
+>```java
+>// 二叉树的最大深度
+>if (root == null) {
+>    return 0;
+>}
+>```
+>一棵空的二叉树，可以认为是一个高度为`0`的二叉树。
+>```java
+>// 二叉树的前序遍历
+>if (root == null) {
+>    return;
+>}
+>```
+>一棵空的二叉树，自然不用往 result 里放任何的东西。
