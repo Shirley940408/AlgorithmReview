@@ -1461,4 +1461,90 @@ class ResultType {
 *   通过中序遍历，可快速得到升序节点列表。
 *   在BST中查找元素，平均情况下时间复杂度是O(logN)；插入新节点，保持BST特性平均情况下要耗时O（logN）。
 *   和有序数组的对比：有序数组查找某元素可以用二分法，时间复杂度是O（logN）；但是插入新元素，维护数组有序性要耗时O(N)。
+BST 的增删查改
+---------
+### 什么是二叉搜索树(Binary Search Tree)
 
+**二叉搜索树**可以是一棵空树或者是一棵满足下列条件的[二叉树](https://zh.wikipedia.org/wiki/%E4%BA%8C%E5%8F%89%E6%A0%91):
+
+*   如果它的左子树不空，则左子树上所有节点值`均小于`它的根节点值。
+*   如果它的右子树不空，则右子树上所有节点值`均大于`它的根节点值。
+*   它的左右子树均为二叉搜索树(BST)。
+*   严格定义下BST中是没有值相等的节点的(No duplicate nodes)。  
+    根据上述特性，我们可以得到一个结论：BST**中序遍历**得到的序列是**升序**的。如下述BST的中序序列为：\[1,3,4,6,7,8,10,13,14\]
+
+![BST](./imgs/BSTBasic)
+
+### BST基本操作——增删改查(CRUD)
+对于树节点的定义如下：
+```java
+class TreeNode{
+	int val;
+	TreeNode left;
+	TreeNode right;
+	pubic TreeNode(int val) {
+		this.val = val;
+		this.left = this.right = null;
+	}
+}
+```
+#### 基本操作之查找(Retrieve)
+- 思路
+
+  - 查找值为val的节点，如果val小于根节点则在左子树中查找，反之在右子树中查找
+- 代码实现
+
+```java
+public TreeNode searchBST(TreeNode root, int val) {
+	if (root == null) {
+		return null;
+	}// 未找到值为val的节点
+	if (val < root.val) {
+		return searchBST(root.left, val);//val小于根节点值，在左子树中查找
+	} else if (val > root.val) {
+		return searchBST(root.right, val);//val大于根节点值，在右子树中查找
+	} else {
+		return root;//找到了
+	}
+}
+
+```
+#### 基本操作之修改(Update)
+- 思路
+  - 修改仅仅需要在查找到需要修改的节点之后，更新这个节点的值就可以了
+- 代码实现
+```java
+public void updateBST(TreeNode root, int target, int val) {
+	if (root == null) {
+		return;
+	}// 未找到target节点
+	if (target < root.val) {
+		updateBST(root.left, target, val);//target小于根节点值，在左子树中查找
+	} else if (target > root.val) {
+		updateBST(root.right, target, val);//target大于根节点值，在右子树中查找
+	} else { //找到了
+		root.val = val;
+	}
+}
+```
+### 基本操作之增加(Create)
+- 思路
+
+  - 根节点为空，则待添加的节点为根节点
+  - 如果待添加的节点值小于根节点，则在左子树中添加
+  - 如果待添加的节点值大于根节点，则在右子树中添加
+  - 我们统一在树的叶子节点(Leaf Node)后添加
+代码实现
+```java
+public TreeNode insertNode(TreeNode root, TreeNode node) {
+    if (root == null) {
+        return node;
+    }
+    if (root.val > node.val) {
+        root.left = insertNode(root.left, node);
+    } else {
+        root.right = insertNode(root.right, node);
+    }
+    return root;
+}
+```
