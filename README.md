@@ -1548,3 +1548,103 @@ public TreeNode insertNode(TreeNode root, TreeNode node) {
     return root;
 }
 ```
+#### 基本操作之删除(Delete)
+- 思路(最为复杂)
+
+  - 考虑待删除的节点为叶子节点，可以直接删除并修改父亲节点(Parent Node)的指针，需要区分待删节点是否为根节点
+  - 考虑待删除的节点为单支节点(只有一棵子树——左子树 or 右子树)，与删除链表节点操作类似，同样的需要区分待删节点是否为根节点
+  - 考虑待删节点有两棵子树，可以将待删节点与左子树中的最大节点进行交换，由于左子树中的最大节点一定为叶子节点，所以这时再删除待删的节点可以参考第一条
+  
+详细的解释可以看 http://www.algolist.net/Data_structures/Binary_search_tree/Removal
+代码实现
+```java
+public TreeNode removeNode(TreeNode root, int value) {
+    TreeNode dummy = new TreeNode(0);
+    dummy.left = root;
+    TreeNode parent = findNode(dummy, root, value);
+    TreeNode node;
+    if (parent.left != null && parent.left.val == value) {
+        node = parent.left;
+    } else if (parent.right != null && parent.right.val == value) {
+        node = parent.right;
+    } else {
+        return dummy.left;
+    }
+    deleteNode(parent, node);
+    return dummy.left;
+}
+
+private TreeNode findNode(TreeNode parent, TreeNode node, int value) {
+    if (node == null) {
+        return parent;
+    }
+    if (node.val == value) {
+        return parent;
+    }
+    if (value < node.val) {
+        return findNode(node, node.left, value);
+    } else {
+        return findNode(node, node.right, value);
+    }
+}
+
+private void deleteNode(TreeNode parent, TreeNode node) {
+    if (node.right == null) {
+        if (parent.left == node) {
+            parent.left = node.left;
+        } else {
+            parent.right = node.left;
+        }
+    } else {
+        TreeNode temp = node.right;
+        TreeNode father = node;
+        while (temp.left != null) {
+            father = temp;
+            temp = temp.left;
+        }
+        if (father.left == temp) {
+            father.left = temp.right;
+        } else {
+            father.right = temp.right;
+        }
+        if (parent.left == node) {
+            parent.left = temp;
+        } else {
+            parent.right = temp;
+        }
+        temp.left = node.left;
+        temp.right = node.right;
+    }
+}
+```
+- 实战
+http://www.lintcode.com/en/problem/remove-node-in-binary-search-tree/
+http://www.lintcode.com/en/problem/trim-binary-search-tree/
+
+什么是平衡二叉搜索树
+----------
+
+### 定义
+
+平衡二叉搜索树（Balanced Binary Search Tree，又称为AVL树，**有别于AVL算法**）是二叉树中的一种特殊的形态。二叉树当且仅当满足如下两个条件之一，是平衡二叉树：
+
+*   空树。
+*   **左右子树高度差绝对值不超过1**且**左右子树都是平衡二叉树**。
+![Balanced Binary Search Tree](./imgs/BBST.png)
+如图，节点旁边的数字表示左右两子树高度差。(a)是AVL树，(b)不是，(b)中5节点不满足AVL树，故4节点，3节点都不再是AVL树。
+
+### AVL树的高度为O(logN)
+当AVL树有N个节点时，高度为O(logN)O(logN)。为何？  
+试想一棵满二叉树，每个节点左右子树高度相同，随着树高的增加，叶子容量指数暴增，故树高一定是O(logN)。而相比于满二叉树，**AVL树仅放宽一个条件，允许左右两子树高度差1**，当树高足够大时，可以把1忽略。如图是高度为9的最小AVL树，若节点更少，树高绝不会超过8，也即为何AVL树高会被限制到O(logN)，因为**树不可能太稀疏**。
+![Balanced Binary Search Tree](./imgs/AVL.png)
+为何普通二叉树不是O(logN)？这里给出最坏的单枝树，若单枝扩展，则树高为O(N)：
+![BadCase](./imgs/BadCase.png)
+### AVL树有什么用？
+
+最大作用是保证查找的**最坏**时间复杂度为O(logN)。而且较浅的树对插入和删除等操作也更快。
+
+### AVL树的相关练习题
+
+判断一棵树是否为平衡树  
+[http://www.lintcode.com/problem/balanced-binary-tree/](http://www.lintcode.com/problem/balanced-binary-tree/)  
+提示：可以自下而上递归判断每个节点是否平衡。若平衡将当前节点高度返回，供父节点判断;否则该树一定不平衡。
