@@ -1473,7 +1473,8 @@ BST 的增删查改
 *   严格定义下BST中是没有值相等的节点的(No duplicate nodes)。  
     根据上述特性，我们可以得到一个结论：BST**中序遍历**得到的序列是**升序**的。如下述BST的中序序列为：\[1,3,4,6,7,8,10,13,14\]
 
-![BST](./imgs/BSTBasic)
+
+![BST](./imgs/BSTBasic.png)
 
 ### BST基本操作——增删改查(CRUD)
 对于树节点的定义如下：
@@ -1630,14 +1631,18 @@ http://www.lintcode.com/en/problem/trim-binary-search-tree/
 
 *   空树。
 *   **左右子树高度差绝对值不超过1**且**左右子树都是平衡二叉树**。
+
 ![Balanced Binary Search Tree](./imgs/BBST.png)
+
 如图，节点旁边的数字表示左右两子树高度差。(a)是AVL树，(b)不是，(b)中5节点不满足AVL树，故4节点，3节点都不再是AVL树。
 
 ### AVL树的高度为O(logN)
 当AVL树有N个节点时，高度为O(logN)O(logN)。为何？  
 试想一棵满二叉树，每个节点左右子树高度相同，随着树高的增加，叶子容量指数暴增，故树高一定是O(logN)。而相比于满二叉树，**AVL树仅放宽一个条件，允许左右两子树高度差1**，当树高足够大时，可以把1忽略。如图是高度为9的最小AVL树，若节点更少，树高绝不会超过8，也即为何AVL树高会被限制到O(logN)，因为**树不可能太稀疏**。
 ![Balanced Binary Search Tree](./imgs/AVL.png)
+
 为何普通二叉树不是O(logN)？这里给出最坏的单枝树，若单枝扩展，则树高为O(N)：
+
 ![BadCase](./imgs/BadCase.png)
 ### AVL树有什么用？
 
@@ -1648,3 +1653,4 @@ http://www.lintcode.com/en/problem/trim-binary-search-tree/
 判断一棵树是否为平衡树  
 [http://www.lintcode.com/problem/balanced-binary-tree/](http://www.lintcode.com/problem/balanced-binary-tree/)  
 提示：可以自下而上递归判断每个节点是否平衡。若平衡将当前节点高度返回，供父节点判断;否则该树一定不平衡。
+
